@@ -12,10 +12,15 @@ export class NotificationsController {
     try {
       await this.notificationsService.sendPetLostNotification(
         reportPetLostDto.petId,
+        reportPetLostDto.latitude,
+        reportPetLostDto.longitude,
       );
       return {
         message: 'Email de mascota perdida enviado exitosamente',
         petId: reportPetLostDto.petId,
+        location: reportPetLostDto.latitude && reportPetLostDto.longitude
+          ? { latitude: reportPetLostDto.latitude, longitude: reportPetLostDto.longitude }
+          : null,
       };
     } catch (error) {
       throw new BadRequestException(
@@ -30,11 +35,16 @@ export class NotificationsController {
       await this.notificationsService.sendPetFoundNotification(
         reportPetFoundDto.petId,
         reportPetFoundDto.contactInfo,
+        reportPetFoundDto.latitude,
+        reportPetFoundDto.longitude,
       );
       return {
         message: 'Email de mascota encontrada enviado exitosamente',
         petId: reportPetFoundDto.petId,
         contactInfo: reportPetFoundDto.contactInfo,
+        location: reportPetFoundDto.latitude && reportPetFoundDto.longitude
+          ? { latitude: reportPetFoundDto.latitude, longitude: reportPetFoundDto.longitude }
+          : null,
       };
     } catch (error) {
       throw new BadRequestException(

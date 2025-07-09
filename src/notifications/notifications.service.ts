@@ -29,7 +29,11 @@ export class NotificationsService {
     });
   }
 
-  async sendPetLostNotification(petId: number): Promise<void> {
+  async sendPetLostNotification(
+    petId: number,
+    latitude?: number,
+    longitude?: number,
+  ): Promise<void> {
     try {
       // Obtener información de la mascota y su dueño
       const pet = await this.petsService.findOne(petId);
@@ -40,7 +44,7 @@ export class NotificationsService {
       }
 
       // Crear el template del email para mascota perdida
-      const emailTemplate = this.createPetLostEmailTemplate(pet, owner);
+      const emailTemplate = this.createPetLostEmailTemplate(pet, owner, latitude, longitude);
 
       // Enviar el email
       await this.transporter.sendMail({
@@ -62,6 +66,8 @@ export class NotificationsService {
   async sendPetFoundNotification(
     petId: number,
     contactInfo: ContactInfo,
+    latitude?: number,
+    longitude?: number,
   ): Promise<void> {
     try {
       // Obtener información de la mascota y su dueño
@@ -77,6 +83,8 @@ export class NotificationsService {
         pet,
         owner,
         contactInfo,
+        latitude,
+        longitude,
       );
 
       // Enviar el email
@@ -96,7 +104,12 @@ export class NotificationsService {
     }
   }
 
-  private createPetLostEmailTemplate(pet: any, owner: any): string {
+  private createPetLostEmailTemplate(
+    pet: any,
+    owner: any,
+    latitude?: number,
+    longitude?: number,
+  ): string {
     const petImage = pet.imageUrl
       ? `<img src="${process.env.BASE_URL || 'http://localhost:3000'}${pet.imageUrl}" alt="${pet.name}" style="max-width: 300px; border-radius: 10px; margin: 20px 0;">`
       : '';
@@ -202,6 +215,24 @@ export class NotificationsService {
               : ''
           }
 
+          ${
+            latitude && longitude
+              ? `
+          <div style="background-color: #e8f5e8; border: 1px solid #4caf50; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3 style="color: #2e7d32; margin-top: 0;">📍 Última ubicación conocida</h3>
+            <p style="color: #2e7d32; margin-bottom: 15px;">Se reportó la pérdida en las siguientes coordenadas:</p>
+            <p style="color: #2e7d32;"><strong>Latitud:</strong> ${latitude}</p>
+            <p style="color: #2e7d32;"><strong>Longitud:</strong> ${longitude}</p>
+            <div style="text-align: center; margin-top: 15px;">
+              <a href="https://www.google.com/maps?q=${latitude},${longitude}" target="_blank" class="btn" style="background-color: #4caf50;">
+                📍 Ver en Google Maps
+              </a>
+            </div>
+          </div>
+          `
+              : ''
+          }
+
           <div style="background-color: #fff3cd; border: 1px solid #ffeaa7; padding: 20px; border-radius: 8px; margin: 20px 0;">
             <h3 style="color: #856404; margin-top: 0;">¿Qué hacer ahora?</h3>
             <ul style="color: #856404;">
@@ -233,6 +264,8 @@ export class NotificationsService {
     pet: any,
     owner: any,
     contactInfo: ContactInfo,
+    latitude?: number,
+    longitude?: number,
   ): string {
     const petImage = pet.imageUrl
       ? `<img src="${process.env.BASE_URL || 'http://localhost:3000'}${pet.imageUrl}" alt="${pet.name}" style="max-width: 300px; border-radius: 10px; margin: 20px 0;">`
@@ -358,6 +391,24 @@ export class NotificationsService {
             <p><strong>Teléfono:</strong> <a href="tel:${contactInfo.phone}" style="color: #155724;">${contactInfo.phone}</a></p>
             <p><strong>Email:</strong> <a href="mailto:${contactInfo.email}" style="color: #155724;">${contactInfo.email}</a></p>
           </div>
+
+          ${
+            latitude && longitude
+              ? `
+          <div style="background-color: #e8f5e8; border: 1px solid #4caf50; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3 style="color: #2e7d32; margin-top: 0;">📍 Ubicación donde fue encontrada</h3>
+            <p style="color: #2e7d32; margin-bottom: 15px;">${pet.name} fue encontrada en las siguientes coordenadas:</p>
+            <p style="color: #2e7d32;"><strong>Latitud:</strong> ${latitude}</p>
+            <p style="color: #2e7d32;"><strong>Longitud:</strong> ${longitude}</p>
+            <div style="text-align: center; margin-top: 15px;">
+              <a href="https://www.google.com/maps?q=${latitude},${longitude}" target="_blank" class="btn" style="background-color: #4caf50;">
+                📍 Ver en Google Maps
+              </a>
+            </div>
+          </div>
+          `
+              : ''
+          }
 
           <div style="background-color: #d1ecf1; border: 1px solid #bee5eb; padding: 20px; border-radius: 8px; margin: 20px 0;">
             <h3 style="color: #0c5460; margin-top: 0;">Próximos pasos recomendados:</h3>

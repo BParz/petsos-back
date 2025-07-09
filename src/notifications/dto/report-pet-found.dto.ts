@@ -4,6 +4,7 @@ import {
   Min,
   ValidateNested,
   IsString,
+  IsOptional,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -31,4 +32,14 @@ export class ReportPetFoundDto {
   @ValidateNested()
   @Type(() => ContactInfoDto)
   contactInfo: ContactInfoDto;
+
+  @Type(() => Number)
+  @IsNumber()
+  @IsOptional()
+  latitude?: number;
+
+  @Type(() => Number)
+  @IsNumber()
+  @IsOptional()
+  longitude?: number;
 }
