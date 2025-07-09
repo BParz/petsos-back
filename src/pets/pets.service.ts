@@ -114,20 +114,6 @@ export class PetsService {
         where: { userId, isActive: true },
         relations: ['owner'],
         order: { createdAt: 'DESC' },
-        select: {
-          id: true,
-          name: true,
-          species: true,
-          breed: true,
-          age: true,
-          weight: true,
-          color: true,
-          description: true,
-          isActive: true,
-          createdAt: true,
-          updatedAt: true,
-          userId: true,
-        },
       });
     } catch {
       throw new InternalServerErrorException('Error al obtener tus mascotas');

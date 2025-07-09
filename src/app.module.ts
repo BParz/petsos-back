@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { PetsModule } from './pets/pets.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { PetsModule } from './pets/pets.module';
     UsersModule,
     AuthModule,
     PetsModule,
+    NotificationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

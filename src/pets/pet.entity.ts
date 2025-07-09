@@ -33,6 +33,9 @@ export class Pet {
   @Column({ nullable: true })
   description: string;
 
+  @Column({ nullable: true })
+  imageUrl: string; // URL de la imagen de la mascota
+
   @Column({ default: true })
   isActive: boolean;
 

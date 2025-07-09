@@ -1,0 +1,14 @@
+# Copia este contenido a tu archivo .env
+
+# Configuración SMTP para pruebas
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=petsosstg@gmail.com
+SMTP_PASS=Petsos2025#
+
+# URLs del sistema
+BASE_URL=http://localhost:3000
+FRONTEND_URL=https://bparz.github.io
+
+# Email de soporte
+SUPPORT_EMAIL=soporte@petsos.com

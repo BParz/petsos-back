@@ -6,6 +6,7 @@ import {
   Min,
   Max,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class CreatePetDto {
   @IsString()
@@ -20,11 +21,13 @@ export class CreatePetDto {
   @IsNotEmpty()
   breed: string;
 
+  @Type(() => Number)
   @IsNumber()
   @Min(0)
   @Max(30)
   age: number;
 
+  @Type(() => Number)
   @IsNumber()
   @Min(0.1)
   @Max(200)
@@ -38,6 +41,11 @@ export class CreatePetDto {
   @IsOptional()
   description?: string;
 
+  @IsString()
+  @IsOptional()
+  imageUrl?: string;
+
+  @Type(() => Number)
   @IsNumber()
   @IsOptional()
   @Min(1)
