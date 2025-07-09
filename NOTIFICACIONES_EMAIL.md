@@ -8,7 +8,7 @@ Estos endpoints permiten enviar notificaciones por email relacionadas con mascot
 
 - **URL:** `/notifications/pet-lost`
 - **Método:** `POST`
-- **Autenticación:** Requiere JWT (Bearer Token)
+- **Autenticación:** No requiere autenticación
 
 ### Body (JSON):
 ```
@@ -19,7 +19,6 @@ Estos endpoints permiten enviar notificaciones por email relacionadas con mascot
 
 ### Headers:
 ```
-Authorization: Bearer <token>
 Content-Type: application/json
 ```
 
@@ -34,7 +33,6 @@ Content-Type: application/json
 ### Ejemplo con curl:
 ```
 curl -X POST http://localhost:3000/notifications/pet-lost \
-  -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{"petId": 123}'
 ```
@@ -45,7 +43,7 @@ curl -X POST http://localhost:3000/notifications/pet-lost \
 
 - **URL:** `/notifications/pet-found`
 - **Método:** `POST`
-- **Autenticación:** Requiere JWT (Bearer Token)
+- **Autenticación:** No requiere autenticación
 
 ### Body (JSON):
 ```
@@ -61,7 +59,6 @@ curl -X POST http://localhost:3000/notifications/pet-lost \
 
 ### Headers:
 ```
-Authorization: Bearer <token>
 Content-Type: application/json
 ```
 
@@ -81,7 +78,6 @@ Content-Type: application/json
 ### Ejemplo con curl:
 ```
 curl -X POST http://localhost:3000/notifications/pet-found \
-  -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{
     "petId": 123,
@@ -96,7 +92,7 @@ curl -X POST http://localhost:3000/notifications/pet-found \
 ---
 
 ## Notas
-- Ambos endpoints requieren autenticación JWT.
+- Ambos endpoints NO requieren autenticación JWT.
 - El campo `petId` debe ser el ID de la mascota registrada en el sistema.
 - El campo `contactInfo` es obligatorio solo para `/pet-found` y debe incluir nombre, teléfono y email de contacto.
 - Las respuestas de error incluirán un mensaje descriptivo en caso de fallo.
